@@ -1,3 +1,7 @@
+package com.kslim1025.daily10minute
+
+import android.app.Activity
+
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher

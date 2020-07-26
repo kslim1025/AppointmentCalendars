@@ -33,6 +33,7 @@ class LoginActivity : BaseActivity() {
             val inputId = emailEdt.text.toString()
             val inputPw = pwEdt.text.toString()
 
+
 //            서버에 로그인 요청
             ServerUtil.postRequestLogin(mContext, inputId, inputPw, object : ServerUtil.JsonResponseHandler {
                 override fun onResponse(json: JSONObject) {
