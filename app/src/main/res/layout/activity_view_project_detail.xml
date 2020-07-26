@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".ViewProjectDetailActivity">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="250dp">
+
+        <ImageView
+            android:id="@+id/projectImg"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"/>
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#88000000"/>
+
+        <TextView
+            android:id="@+id/projectTitleTxt"
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#FFFFFF"
+            android:text="프로젝트 제목 자리"
+            android:textSize="20sp" />
+
+    </FrameLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#A0A0A0" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="10dp"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="설명 : " />
+
+        <TextView
+            android:id="@+id/projectDescriptionTxt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="설명 내용이 적힐 자리"
+            android:textColor="#000000"/>
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#A0A0A0" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="10dp"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="인증 방법 : " />
+
+        <TextView
+            android:id="@+id/proofMethodTxt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="인증 방법이 적힐 자리"
+            android:textColor="#000000"/>
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#A0A0A0" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="10dp"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="참여 인원 수 : " />
+
+        <TextView
+            android:id="@+id/challengerCountTxt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="~명 도전 진행중"
+            android:textColor="#000000"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+        <Button
+            android:id="@+id/viewOngoingUsersBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="명단 확인" />
+
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#A0A0A0" />
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <Button
+        android:id="@+id/joinProjectBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="나도 참여하기" />
+
+    <LinearLayout
+        android:id="@+id/ongoingButtonLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/uploadProofBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="오늘의 참여 인증하기"/>
+
+        <Button
+            android:id="@+id/viewOtherProofBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="다른 사람들의 인증 보러 가기" />
+
+        <Button
+            android:id="@+id/giveUpBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="중도 포기하기" />
+
+    </LinearLayout>
+
+
+</LinearLayout>
+    © 2020 GitHub, Inc.

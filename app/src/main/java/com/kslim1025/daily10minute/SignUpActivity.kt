@@ -1,20 +1,12 @@
-package com.kslim1025.daily10minute
-
-import android.content.Intent
 import android.os.Bundle
-import android.os.Parcel
-import android.os.Parcelable
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.widget.Toast
+import com.kslim1025.daily10minute.BaseActivity
+import com.kslim1025.daily10minute.R
 import com.kslim1025.daily10minute.utils.ServerUtil
-import kotlinx.android.synthetic.main.activity_login.*
-import kotlinx.android.synthetic.main.activity_login.pwEdt
 import kotlinx.android.synthetic.main.activity_sign_up.*
 import org.json.JSONObject
-import org.w3c.dom.Text
-import kotlinx.android.synthetic.main.activity_sign_up.emailEdt as emailEdt1
 
 class SignUpActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

@@ -3,6 +3,7 @@ package com.kslim1025.daily10minute
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
+import com.kslim1025.daily10minute.utils.ContextUtil
 import com.kslim1025.daily10minute.utils.ServerUtil
 import kotlinx.android.synthetic.main.activity_login.*
 import org.json.JSONObject
@@ -43,7 +44,25 @@ class LoginActivity : BaseActivity() {
 //                    그 외의 모든 숫자는 로그인 실패.
 
                     if (codeNum == 200) {
-//                        로그인 성공
+//                        로그인 성공 => 서버가 알려주는 토큰값을 받아서 기기에 저장
+
+//                        토큰값 추출
+//                        data로 이름 붙은 {  } 를 우선 추출
+                        val data = json.getJSONObject("data")
+
+//                        data { } 내부에서 token String을 추출
+                        val token = data.getString("token")
+
+//                        추출된 토큰을 기기에 저장해야함.
+                        ContextUtil.setLoginUserToken(mContext, token)
+
+//                        메인화면으로 진입 => 로그인화면 종료
+                        val myIntent = Intent(mContext, MainActivity::class.java)
+                        startActivity(myIntent)
+
+                        finish()
+
+
                     }
                     else {
 //                        로그인 실패
