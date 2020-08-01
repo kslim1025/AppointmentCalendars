@@ -1,17 +1,22 @@
 package com.kslim1025.daily10minute.adapters
 
 import android.content.Context
+import android.content.Intent
+import android.os.Handler
+import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.TextView
+import android.widget.*
 import com.bumptech.glide.Glide
 import com.kslim1025.daily10minute.R
+import com.kslim1025.daily10minute.ViewProofDetailActivity
 import com.kslim1025.daily10minute.datas.Proof
+import com.kslim1025.daily10minute.utils.ServerUtil
+import com.kslim1025.daily10minute.utils.TimeUtil
+import org.json.JSONObject
 import java.text.SimpleDateFormat
+import java.util.concurrent.TimeUnit
 
 class ProofAdapter(
     val mContext:Context,
@@ -43,12 +48,8 @@ class ProofAdapter(
         userNickNameTxt.text = data.user.nickName
         Glide.with(mContext).load(data.user.profileImageList[0].imageUrl).into(userProfileImg)
 
-//        인증일시 : 2020년 6월 9일 오전 2시 8분 양식으로 출력
-//        data의 proofTime 변수를 활용하자
-//        String으로 변환 => SimpleDateFormat의 format 기능 활용
-
-        val sdf = SimpleDateFormat("yyyy년 M월 d일 a h시 m분")
-        proofTimeTxt.text = sdf.format(data.proofTime.time)
+//        인증일시 : TimeUtil의 기능을 활용해서 출력
+        proofTimeTxt.text = TimeUtil.getTimeAgoStringFromCalendar(data.proofTime)
 
 
 //        그림이 있느냐 ? 없느냐 구별 해야함. => How? data의 이미지주소목록의 크기값 확인
@@ -70,6 +71,61 @@ class ProofAdapter(
         likeBtn.text = "좋아요 ${data.likeCount}개"
         replyBtn.text = "답글 ${data.replyCount}개"
 
+//        만약, 이미 좋아요를 찍은 글이라면?
+        if (data.myLike) {
+            likeBtn.text = "좋아요 취소 ${data.likeCount}개"
+        }
+
+//        좋아요 버튼 눌리는 이벤트
+        likeBtn.setOnClickListener {
+
+//            data.id 를 이용하면, 몇번 인증글인지 알아낼 수 있다
+
+            ServerUtil.postRequestLikeProof(mContext, data.id, object : ServerUtil.JsonResponseHandler {
+                override fun onResponse(json: JSONObject) {
+
+                    val message = json.getString("message")
+
+                    val dataObj = json.getJSONObject("data")
+                    val like = dataObj.getJSONObject("like")
+
+
+//                    변경된 좋아요 갯수 / 내 좋아요 여부를 data의 변수에 반영
+                    data.likeCount = like.getInt("like_count")
+                    data.myLike = like.getBoolean("my_like")
+
+//                    어댑터에는 runOnUiThread 기능이 없다.
+//                    그래도 어떻게든 UIThread 안에서 UI반영을 해야 앱이 동작함.
+                    val myHandler = Handler(Looper.getMainLooper())
+
+                    myHandler.post {
+                        Toast.makeText(mContext, message, Toast.LENGTH_SHORT).show()
+
+//                        리스트 어댑터 새로고침
+                        notifyDataSetChanged()
+
+                    }
+
+                }
+
+            })
+
+        }
+
+//        답글 버튼이 눌리면 => 답글 목록을 보는 화면으로 이동
+        replyBtn.setOnClickListener {
+
+            val myIntent = Intent(mContext, ViewProofDetailActivity::class.java)
+
+//            인증게시글의 id값만 넘겨서 => 상세화면에서 다시 불러오자
+            myIntent.putExtra("proof_id", data.id)
+
+            mContext.startActivity(myIntent)
+
+        }
+
         return row
     }
+
+
 }
