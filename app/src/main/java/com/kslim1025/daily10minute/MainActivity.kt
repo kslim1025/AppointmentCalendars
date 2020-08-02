@@ -2,6 +2,7 @@ package com.kslim1025.daily10minute
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import com.kslim1025.daily10minute.adapters.ProjectAdapter
 import com.kslim1025.daily10minute.datas.Project
@@ -20,6 +21,8 @@ class MainActivity : BaseActivity() {
         setContentView(R.layout.activity_main)
         setupEvents()
         setValues()
+
+        Log.d("디바이스토큰", FirebaseInstanceId.getInstance().token)
     }
 
 

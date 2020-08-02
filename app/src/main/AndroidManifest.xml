@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.kslim1025.daily10minute">
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -12,12 +13,26 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
+        <service
+            android:name=".fcm.MyFCMService"
+            android:enabled="true"
+            android:exported="true"
+            tools:ignore="Instantiatable">
+
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+
+        </service>
+
         <activity android:name=".NotificationListActivity"/>
         <activity android:name=".EditProjectProofActivity" />
         <activity android:name=".ViewProjectProofListActivity"></activity>
         <activity android:name=".ViewOngoingUsersActivity" />
         <activity android:name=".ViewProjectDetailActivity" />
         <activity android:name=".ViewProofDetailActivity"/>
+
+
         <activity
             android:name=".SplashActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
