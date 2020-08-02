@@ -12,6 +12,7 @@ import com.bumptech.glide.Glide
 import com.kslim1025.daily10minute.R
 import com.kslim1025.daily10minute.datas.Reply
 import com.kslim1025.daily10minute.utils.ServerUtil
+import com.kslim1025.daily10minute.utils.TimeUtil
 import org.json.JSONObject
 
 
@@ -34,11 +35,16 @@ class ReplyAdapter(
         val contentTxt = row.findViewById<TextView>(R.id.contentTxt)
         val likeBtn = row.findViewById<Button>(R.id.likeBtn)
         val likeCountTxt = row.findViewById<TextView>(R.id.likeCountTxt)
+        val writtenTimeTxt = row.findViewById<TextView>(R.id.writtenTimeTxt)
+        val writeReplyTxt = row.findViewById<TextView>(R.id.writeReplyTxt)
 
         val data = mList[position]
 
         writerNickNameTxt.text = data.writer.nickName
         contentTxt.text = data.content
+
+//        작성 시간 표시
+        writtenTimeTxt.text = TimeUtil.getTimeAgoStringFromCalendar(data.createdAt)
 
 //        좋아요 갯수 처리 -> 0개면 숨김, 그 이상이면 보여주고 갯수 반영
         if (data.likeCount == 0) {
@@ -76,6 +82,16 @@ class ReplyAdapter(
             ServerUtil.postRequestLikeReply(mContext, data.id, object : ServerUtil.JsonResponseHandler {
                 override fun onResponse(json: JSONObject) {
 
+//                    서버가 알려주는 댓글의 변경된 상태를 data변수에 반영
+
+                    val dataObj = json.getJSONObject("data")
+//                    dataObj내부의 JSONObject => Reply 형태로 변환
+                    val likeReply = Reply.getReplyFromJson(dataObj.getJSONObject("like"))
+
+//                    이미 리스트뷰에 뿌려져 있는 data 변수의 값 일부 변경
+                    data.likeCount = likeReply.likeCount
+                    data.myLike = likeReply.myLike
+
 //                    서버가 주는 메세지를 토스트로 출력
 
                     val message = json.getString("message")
@@ -92,6 +108,14 @@ class ReplyAdapter(
                 }
 
             })
+
+        }
+
+//        텍스트뷰 / 이미지뷰 / 리니어레이아웃 등의 특이한 이벤트가 없는 모든 뷰들은
+//        onClickListener 이벤트처리가 가능하다.
+        writeReplyTxt.setOnClickListener {
+
+            Toast.makeText(mContext, "아직 준비중인 기능입니다.", Toast.LENGTH_SHORT).show()
 
         }
 
